@@ -248,7 +248,9 @@ Pour récapituler, il faut que :
 - Vous faites tourner la base de données via un Deployement (1 pod, allocations/limitations idem que pour API et Public), derrière un service bien choisi.
 - Vous utilisez l'Ingress pour diriger les requêtes (l'Ingress vient remplacer votre proxy Nginx de Docker).
 
-Pas plus de documentation pour cette fois ! Vous avez déjà tout ce qu'il vous faut.
+Un peu de documentation sur les Ingress :
+
+- [Généralités sur les Ingress](https://kubernetes.io/fr/docs/concepts/services-networking/ingress/)
 
 ### Questions
 
