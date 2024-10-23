@@ -256,7 +256,7 @@ Un peu de documentation sur les Ingress :
 
 Un beau schéma !
 
-## Quelqu'un a dit "HELM" ?! (Défi 6)
+## Quelqu'un a dit "HELM" ?! (Défi 6 - Objectif projet)
 
 ### Contenu
 
