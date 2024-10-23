@@ -175,6 +175,8 @@ Avant tout, vous aller le copier, et faire en sorte que **le site soit contenu a
 
 **Utilisez un Deployment pour déployer votre site Django similairement à celui créé précédemment.**
 
+Utilisez également un service **ClusterIP** pour accéder au site depuis kubeproxy.
+
 Sauf que c'est pas fini cette fois ! **Vous allez aussi créer un autre Deployment, contenant un unique Pod, pour déployer la base de données Postgresql. Le service que vous utiliserez est un ClusterIP.**
 
 **Quelques indices sur la procédure pour s'en sortir :**
