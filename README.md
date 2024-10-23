@@ -198,7 +198,7 @@ Et un peu plus de documentation pour comprendre comment faire ! Bon courage, c'e
 
 ### Questions
 
-- Pourquoi utilise-t-on un service type NodePort pour le site Django et un service type ClusterIP pour la base de données ?
+- Quelle est la différence entre un service ClusterIP et NodePort ?
 - Quelle critique pouvez-vous donner vis-à-vis de l'utilisation d'un Pod pour la base de données ?
 - Sur quel type de ressource KubeDNS crée des entrées ? Quelle information propre a la ressource est utilisée ?
 - Le schéma !
