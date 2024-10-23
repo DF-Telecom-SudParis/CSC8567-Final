@@ -203,12 +203,74 @@ Et un peu plus de documentation pour comprendre comment faire ! Bon courage, c'e
 - Sur quel type de ressource KubeDNS crée des entrées ? Quelle information propre a la ressource est utilisée ?
 - Le schéma !
 
-## **Internet ! Me voilà !** (Défi 4)
+## Internet ! Me voilà ! (Défi 4)
 
-Si vous avez réussi le Défi précédent, allez voir un professeur pour qu'il valide votre réussite et révèle ce défi.
+### Contenu
 
-**???**
+Vraiment pas mal !
 
-## **???** (Défi 5)
+Maintenant, on va faire en sorte que votre site soit accessible depuis Internet. Plus partique pour un site web, non ?
 
-**???**
+Vous allez donc créer ce que l'on appelle un Ingress.
+
+Le but, c'est que votre site devienne accessible à l'adresse <https://django.votre_nom_de_groupe.csc8567.luxbulb.org/>
+
+**Une fois que votre configuration d'Ingress est appliquée, allez voir un professeur pour qu'il crée l'entrée DNS qui vous permettra d'accéder à votre Ingress !**
+
+Pour la documentation de ce défi :
+
+- [Généralités sur les Ingress](https://kubernetes.io/docs/concepts/services-networking/ingress/)
+- [Utilisation d'un LoadBalancer MetalLB avec rke2-ingress-nginx-controller](https://www.adaltas.com/fr/2022/09/08/kubernetes-metallb-nginx/) (pour le schéma uniquement)
+
+Petite information supplémentaire pour le schéma : ci-dessous ce que retourne la commande `kubectl get services -n kube-system` lorsque l'on dispose des permissions suffisantes.
+
+```
+NAME                                      TYPE           CLUSTER-IP      EXTERNAL-IP      PORT(S)                      AGE
+rke2-ingress-nginx-controller             LoadBalancer   10.43.144.159   157.159.11.201   80:31324/TCP,443:30747/TCP   10h
+```
+
+### Questions
+
+On met à jour le schéma, ça suffira !
+
+## Au complet ! (Défi 5)
+
+### Contenu
+
+C'est enfin le moment : on va reproduire l'infrastructure qu'on avait sur Docker, mais version (presque) Kubernetes !
+
+Pour récapituler, il faut que :
+
+- Vous ayez deux images Docker permettant de faire tourner séparément les applications API et Public (ou l'équivalent de votre projet).
+- Vous faites tourner ces deux images dans des Deployments (3 pods répliqués, même allocations/limitations de ressources qu'au Défi 2), derrière des services bien choisis.
+- Vous faites tourner la base de données via un Deployement (1 pod, allocations/limitations idem que pour API et Public), derrière un service bien choisi.
+- Vous utilisez l'Ingress pour diriger les requêtes (l'Ingress vient remplacer votre proxy Nginx de Docker).
+
+Pas plus de documentation pour cette fois ! Vous avez déjà tout ce qu'il vous faut.
+
+### Questions
+
+Un beau schéma !
+
+## Quelqu'un a dit "HELM" ?! (Défi 6)
+
+### Contenu
+
+Vous vous souvenez de docker compose ? Eh bien on a un peu l'équivalent sur Kubernetes : Helm, et surtout les chartes Helm.
+
+L'objectif est de créer une charte Helm qui automatise le déploiement de l'infrastructure que vous avez mise en oeuvre au Défi précédent.
+
+Également, vous aller utiliser ConfigMaps pour stocker les informations utiles à la connexion entre le site et la base de données.
+
+Cette fois, on a de la doc à vous partager pour tout ça :
+
+- [Bien débuter avec Helm](https://helm.sh/docs/chart_template_guide/getting_started/)
+- [Utiliser ConfigMaps dans Kubernetes](https://kubernetes.io/docs/concepts/configuration/configmap/)
+
+### Questions
+
+Rien ! Une belle charte Helm fera amplement l'affaire.
+
+## Connexions moins dangereuses (Défi 7)
+
+## ??? (Défi 8)
