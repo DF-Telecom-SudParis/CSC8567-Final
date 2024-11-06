@@ -256,7 +256,7 @@ Un peu de documentation sur les Ingress :
 
 Un beau schéma !
 
-## Quelqu'un a dit "HELM" ?! (Défi 6 - Objectif projet)
+## Quelqu'un a dit "HELM" ?! (Défi 6)
 
 ### Contenu
 
@@ -277,4 +277,184 @@ Rien ! Une belle charte Helm fera amplement l'affaire.
 
 ## Connexions moins dangereuses (Défi 7)
 
-## ??? (Défi 8)
+### Contenu
+
+On veut stocker des données, non ? Pas très pratique si on les perd dès que le Pod contenant la base de donnée s'éteint ou crashe !
+
+Actuellement, vous utilisez un Deployment classique pour déployer votre base de données. Le soucis, c'est qu'un Deployment est fait pour gérer des applications "Stateless", c'est-à-dire qui ne nécessitent pas de persistence de données. C'est adapté pour votre API et votre front, en revanche ça ne l'est pas du tout pour votre base de donnée !!
+
+Vous allez donc utiliser, au lieu d'un Deployment, un StatefulSet pour déployer votre base de données.
+
+Vous allez donc devoir :
+
+- Utiliser un StatefulSet plutôt qu'un Deployment pour déployer votre base de données Postgres
+- Utiliser un Persistent Volume pour stocker le contenu de la base de données
+  - Ressources : 0.1 Go
+- Utiliser un service Headless plutôt qu'un service ClusterIP pour votre base de données
+- Faites bien attention à ne mettre qu'un seul réplica !
+
+De la doc (miam) :
+
+- [StatefulSet de Kubernetes, explication vidéo](https://youtu.be/pPQKAR1pA9U?si=as0jDo02sCPmBR43)
+- [StatefulSets](https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/)
+- [Tutoriel StatefulSet](https://redhat-scholars.github.io/kubernetes-tutorial/kubernetes-tutorial/statefulset.html)
+- [Les Volumes Kubernetes](https://youtu.be/0swOh5C3OVM?si=LNfXMlxe39_wbazI)
+- [Comment fixer le PVC d'un StatefulSet sur Kubernetes ?](https://stackoverflow.com/questions/65266223/how-to-set-pvc-with-statefulset-in-kubernetes)
+
+### Questions
+
+- Quel est l'avantage d'un StatefulSet comparé à un Deployment ? Dans quel cas utilise-t-on un StatefulSet ?
+- Expliquez ce qu'est un service Headless.
+- Mise à jour de la charte Helm
+- Le schéma
+
+## Ajouter des fonctionnalités en live, sans downtime !! (Défi 8)
+
+### Contenu
+
+Vous avez un site qui tourne super bien, trop cool !
+
+Maintenant, on va apprendre à faire proprement une mise à jour, en utilisant le mécanisme de Rolling Update.
+
+Pour cela, ajoutez une (ou plusieurs) fonctionnalité(s) à l'application Front (nouvelle page, ...), et reconstruisez l'image de l'application Front. Téléversez-la sur Docker Hub, avec le tag de version supérieur à la précédente.
+
+Ensuite, déployez votre nouvelle image via une Rolling Update.
+
+Encore de la doc !
+
+- [Faire une Rolling Update](https://kubernetes.io/docs/tutorials/kubernetes-basics/update/update-intro/)
+
+### Questions
+
+- Expliquez la suite d'exécutions faite pour performer une Rolling Update (via un schéma explicatif)
+
+## La scalabili-quoi ?! (Défi 9)
+
+### Contenu
+
+Maintenant, ajoutons une couche supplémentaire de dynamisme, au niveau des ressources alloués à chaque application.
+
+Créez deux nouveaux Deployments qui vont créer/supprimer des Pods de réplication d'API et de Front respectivement en fonction d'un taux de CPU utilisé par chaque Pod (par exemple, 60%).
+
+- Limitez le nombre maximal de pods à créer par Deployment à 10.
+
+Un peu de doc pour faire ça :
+
+- [Mise à l'échelle horizontale avec Kubernetes](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/)
+
+### Questions
+
+- Un schéma !
+
+## Pin Pon Pin Pon ! (Défi 10)
+
+### Contenu
+
+On va utiliser les Liveness Probes pour surveiller de plus près l'état de nos applications (BDD, API, Front).
+
+Créez donc une Liveness Probe pour chaque conteneur dans la charte. Faites bien attention : chaque application pourrait nécessiter un type de sonde particulier.
+
+La doc :
+
+- [Configurer des Liveness Probes dans Kubernetes](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/)
+
+### Questions
+
+- Pour chaque probe, expliquez le choix du type de probe pour lequel vous avez opté.
+- Schéma !
+
+## Connexions peu dangereuses (Défi 11)
+
+### Contenu
+
+Créez un Network policy pour n'autoriser que les connexions provenant des Pods type Front & API sur la BDD.
+Vérifiez que ça fonctionne bien, et montrez-nous !
+
+La doc :
+
+- [Network Policies](https://kubernetes.io/docs/concepts/services-networking/network-policies/)
+
+### Questions
+
+- Rien !
+
+## Connexions robustes (Défi 12)
+
+### Contenu
+
+Déployez une structure type Master/Slave pour votre base de données Postgres.
+
+Vous n'avez pas le droit d'utiliser une charte Helm pré-faite pour ce Défi.
+
+Vous n'avez pas besoin de mettre à jour votre charte Helm pour réussir ce défi.
+
+Bon courage... (c'est dur)
+
+La doc :
+- [Introduction à la réplication](https://www.postgresql.org/docs/current/runtime-config-replication.html)
+- [Réplication de Postgresql sur Kubernetes](https://integralzone.com/kubernetes-configure-postgresql-streaming-replication/)
+- [La vidéo des StatefulSet (toujours bon de rappeler)](https://youtu.be/pPQKAR1pA9U?si=pjmaqy5EvE3P4W2c)
+
+Réussir ce défi de manière propre (à définir par Timothée et Gatien) vous assure 20 au rendu final.
+Vous passerez à tour de rôle pour expliquer le concept. Si vous réussissez tous, le 20 est donné.
+
+Tous les défis suivants sont en bonus, bravo !
+
+### Questions
+
+- Schéma banger svp
+
+## Connexions robustes & automatisées (Défi 13 - Bonus)
+
+Ecrivez une charte Helm automatisant le déploiement d'une structure type Master/Slave pour votre base de données Postgres.
+Incluez cette charte à votre charte globale.
+
+## Cache-cache (Défi 14 - Bonus)
+
+Expliquez l'avantage d'un cache Redis dans votre infrastructure et définissez votre nouvelle infrastructure.
+
+La doc :
+
+- [Redis Cache](https://www.geeksforgeeks.org/redis-cache/)
+
+## Ça mord ! (Défi 15 - Bonus)
+
+Utilisez des Hooks pour configurer votre ConfigMaps avant et après le déploiement de votre charte Helm. Utilisez également des Hooks pour sauvegarder votre base de données avant et après la mise à jour de la charte.
+
+La doc :
+
+- [Helm Chart Hooks](https://www.golinuxcloud.com/kubernetes-helm-hooks-examples/)
+
+## Back it up boy (Défi 16 - Bonus)
+
+Mettez à jour votre infrastructure pour déployer un système de sauvegarde de votre volume de base de données.
+
+## Exploiter les connexions moins dangereuses (Défi 17 - Bonus)
+
+Trouvez un moyen de faire crasher le site de la correction.
+
+## Sécuriser les connexions moins dangeureuses (Défi 18 - Bonus)
+
+Faites en sorte que votre site ne soit pas vulnérable à l'attaque précédente.
+
+## Cognac (Défi 19 - Bonus)
+
+La classe !
+
+Mettez à jour votre site pour qu'il convienne à un environnement de production.
+
+Mettez en particulier en place des workflows pour tester votre site sur le cluster avant d'installer la mise à jour.
+
+## Ajouter des fonctionnalités en live (sans downtime !), partie 2 (Défi 20 - Bonus)
+
+Faites en sorte que votre infrastucture supporte les mises à jour de la base de données sans downtime (modifications colonnes, suppression, ajout, le tout sans perdre de données).
+
+## MiNET, Hosting, Mentalité, Hostile (Défi 21 - Bonus)
+
+Trouvez la référence du titre.
+
+Déployez un service d'hébergement de machines virtuelles dans le cluster.
+
+## Le Fluide (Défi 22 - Bonus)
+
+Déployez Kubeflow et entraînez un modèle reconnaissant des chiffres de la base de données MNIST, à la Kubeflow.
